@@ -20,6 +20,9 @@ Ideas to think on:
 * embedded values (stuff into `.rodata`)
 * destruction functions
 * mini-heap garbage collection
+* Think through polymorphism: full polymorphism requires intantiation at each type. Incomplete polymorphism allows generating one generic implementation that type instantiations re-use.
+* Idea: Traditional RB tree, ADTC RB tree, ADTC B tree performance comparisons
+* Representation transformers: take data designed in one way, expose functions to manipulate it in exactly that same way, but actually store it in another fashion. AoS to SoA for instance.
 
 ## What does ADTC do?
 
@@ -111,11 +114,12 @@ tagged union BST<Elem> {
 ## Can I just dump C declarations into ADTC?
 
 Almost, but usually there are some considerations.
+First, some syntax is slightly more restrictive. (`long const long` is valid C, but ADTC requires `const long long`. In general the order is `static inline const void __attribute__`. This is conventional, so you'll rarely run afoul of it.
 
 A common pattern in C is to represent an array with a pointer.
 So you may have to find `type *var` and convert it to `type[] var` to get the ADTC semantics right.
 
-Additionally, sometimes pointers are meant to be actually nullable, and with ADTC you have to indicate that by wrapping with `Maybe` e.g. `Maybe<struct obj *> var`.
+Additionally, sometimes pointers are meant to be actually nullable, and with ADTC you have to indicate that by wrapping with `Maybe` e.g. `struct obj *? var`.
 
 ADTC also allows `native struct` declarations that revert to default behaviors for handling arrays and pointers and such, to be perfectly compatible with C.
 Imported types from headers are treated as such automatically.
