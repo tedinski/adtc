@@ -1,4 +1,5 @@
 CFLAGS=-Wall -g -O3 -fno-omit-frame-pointer -DNDEBUG
+FG := ~/repos/FlameGraph
 
 all: run_malloc run_buffer
 
@@ -18,8 +19,8 @@ bench: all
 profile: all
 	perf record -F 999 -o perf-out-malloc -g -- ./run_malloc
 	perf record -F 999 -o perf-out-buffer -g -- ./run_buffer
-	perf script -i perf-out-malloc | ~/repos/FlameGraph/stackcollapse-perf.pl | ~/repos/FlameGraph/flamegraph.pl > perf-malloc.svg
-	perf script -i perf-out-buffer | ~/repos/FlameGraph/stackcollapse-perf.pl | ~/repos/FlameGraph/flamegraph.pl > perf-buffer.svg
+	perf script -i perf-out-malloc | $(FG)/stackcollapse-perf.pl | $(FG)/flamegraph.pl > perf-malloc.svg
+	perf script -i perf-out-buffer | $(FG)/stackcollapse-perf.pl | $(FG)/flamegraph.pl > perf-buffer.svg
 
 valgrind: all
 	valgrind ./run_malloc 10

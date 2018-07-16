@@ -38,7 +38,8 @@ int main(int argc, char *argv[])
 		
 	long vmrss, vmsize;
 	
-	printf("Generate \t Copy   \t Delete \t Total  \t VM \n");
+	printf("| Generate\t| Copy  \t| Delete\t| Total \t| VM\n"
+	       "|----\n");
 
 	for(int i = 0; i < 5; i++) {
 
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
 	
 		timestamp end = timestamp_now();
 	
-		printf("%lf \t %lf \t %lf \t %lf \t %ld MB \n",
+		printf("| %.3lf \t| %.3lf \t| %.3lf \t| %.3lf \t| %ld MB\n",
 			timestamp_difference(start, middle),
 			timestamp_difference(middle, late),
 			timestamp_difference(late, end),
