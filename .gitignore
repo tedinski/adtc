@@ -2,4 +2,7 @@
 build.xml
 *.copperdump.html
 *.jar
+*.o
 
+concept/run_*
+concept/perf-*

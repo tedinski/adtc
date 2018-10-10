@@ -1,12 +1,17 @@
+
 This is a quick demonstration of the performance ideas underlying ADTC.
-This benchmark does something quite simple: it compares the performance of two approaches to creating a tree, copying the tree, and deleting both trees.
+This benchmark does something quite simple: it compares the performance of two approaches to creating a tree, copying the tree, and then deleting both trees.
+These approaches are:
 
 1. `malloc`: the tree is allocated in the usual fashion, each node getting allocated independently.
 2. `buffer`: the tree is represented in an ADTC-like fashion, the whole tree allocated inside a single buffer.
 
+
 In general, the ideas on display here are (1) using indexes instead of pointers makes for denser data structures, and (2) using a single buffer instead of large numbers of allocations helps reduce runtime overhead.
 
+
 ## Results
+
 
 `./run_malloc`
 
@@ -18,6 +23,7 @@ In general, the ideas on display here are (1) using indexes instead of pointers 
 | 1.581     | 1.873     | 3.007     | 6.460     | 4100 MB
 | 1.177     | 1.109     | 2.273     | 4.559     | 4100 MB
 
+
 `./run_buffer`
 
 | Generate    | Copy      | Delete    | Total     | VM
@@ -28,9 +34,12 @@ In general, the ideas on display here are (1) using indexes instead of pointers 
 | 1.074     | 1.149     | 0.045     | 2.269     | 2276 MB
 | 1.063     | 1.175     | 0.050     | 2.288     | 2276 MB
 
+
 ### Summary
 
+
 Terminology Note: that we use "% faster" and "% less memory" to mean that the original memory usage is reduced by this percentage. E.g. If we started with 100 MB of memory, using 30% less memory means using 70 MB. Or a runtime of 100s becomes 70s. I.e. `1 - (new / orig)`.
+
 
 | | Malloc-style | Buffer-style | Buffer %-better
 |---|-|-|-
@@ -41,20 +50,24 @@ Terminology Note: that we use "% faster" and "% less memory" to mean that the or
 | Standard deviation | 1.14 s | 0.02 s | 98%
 | Memory usage | 4100 MB | 2276 MB | 44%
 
+
 So depending on how you want to measure things:
 
 * The buffer approach is 30-60% faster. (Or to use different terminology, _twice the speed_.)
 * The buffer approach uses 44% less memory.
 * The buffer approach is vastly more consistent in run times (or latencies).
 
+
 ## Discussion
 
-**Isn't the lack of deletion time for buffers cheating?**
+
+**Isn't the lack of deletion time for ADTC buffers cheating?**
 
 No, this is part of the intended test: lack of need to traverse all data to deallocate it is a legitimate advantage of the buffer-based approach.
 We wanted a benchmark that reflected that advantage at least somewhat.
 You could argue this one reflects it too much, but it is a real performance advantage.
 But nevertheless: note the 30% straight runtime performance advantage in generate and copy times.
+
 
 **Why the larger standard deviation in the malloc strategy?**
 
@@ -67,6 +80,7 @@ We believe the alternating run slow downs are a result of some amortized process
 That is, some garbage-collection-like occasional latencies inherent to allocating and freeing a lot.
 
 Regardless, it seems to also be a significant advantage for the buffer approach: much more consistent run times, for doing the same work.
+
 
 **Doesn't this benchmark disadvantage (insert approach here)?**
 
