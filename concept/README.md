@@ -13,32 +13,35 @@ In general, the ideas on display here are (1) using indexes instead of pointers 
 ## Results
 
 
+Here are the runtime results for the two different benchmarking runs:
+
+
 `./run_malloc`
 
 | Generate    | Copy      | Delete    | Total     | VM
 |----|-|-|-|-
-| 2.355     | 2.292     | 2.257     | 6.904     | 4100 MB
-| 1.582     | 1.884     | 2.989     | 6.455     | 4100 MB
-| 1.168     | 1.111     | 2.250     | 4.529     | 4100 MB
-| 1.581     | 1.873     | 3.007     | 6.460     | 4100 MB
-| 1.177     | 1.109     | 2.273     | 4.559     | 4100 MB
+| 2.355 s    | 2.292 s    | 2.257 s    | 6.904 s    | 4100 MB
+| 1.582 s    | 1.884 s    | 2.989 s    | 6.455 s    | 4100 MB
+| 1.168 s    | 1.111 s    | 2.250 s    | 4.529 s    | 4100 MB
+| 1.581 s    | 1.873 s    | 3.007 s    | 6.460 s    | 4100 MB
+| 1.177 s    | 1.109 s    | 2.273 s    | 4.559 s    | 4100 MB
 
 
 `./run_buffer`
 
 | Generate    | Copy      | Delete    | Total     | VM
 |----|-|-|-|-
-| 1.052     | 1.150     | 0.046     | 2.248     | 2276 MB
-| 1.073     | 1.158     | 0.046     | 2.277     | 2276 MB
-| 1.048     | 1.147     | 0.047     | 2.241     | 2276 MB
-| 1.074     | 1.149     | 0.045     | 2.269     | 2276 MB
-| 1.063     | 1.175     | 0.050     | 2.288     | 2276 MB
+| 1.052 s    | 1.150 s    | 0.046 s    | 2.248 s    | 2276 MB
+| 1.073 s    | 1.158 s    | 0.046 s    | 2.277 s    | 2276 MB
+| 1.048 s    | 1.147 s    | 0.047 s    | 2.241 s    | 2276 MB
+| 1.074 s    | 1.149 s    | 0.045 s    | 2.269 s    | 2276 MB
+| 1.063 s    | 1.175 s    | 0.050 s    | 2.288 s    | 2276 MB
 
 
 ### Summary
 
 
-Terminology Note: that we use "% faster" and "% less memory" to mean that the original memory usage is reduced by this percentage. E.g. If we started with 100 MB of memory, using 30% less memory means using 70 MB. Or a runtime of 100s becomes 70s. I.e. `1 - (new / orig)`.
+Terminology Note: that we use "% faster" and "% less memory" to mean that the original memory usage is reduced by this percentage. E.g. If we started with 100 MB of memory, using 30% less memory means using 70 MB. A runtime that's 50% faster would go from 100s to 50s. I.e. `1 - (new / orig)`.
 
 
 | | Malloc-style | Buffer-style | Buffer %-better
